@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
     private func example() {
         
-        let titles = ["头条", "精选", "娱乐", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
+        let titles = ["头条", "精选", "轻松一刻", "娱乐", "新时代", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
         
         var controllers: [UIViewController] = []
         
