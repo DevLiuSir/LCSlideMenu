@@ -4,6 +4,7 @@
 [![Swift &4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg?style=flat)](https://developer.apple.com/swift/)
 ![](https://camo.githubusercontent.com/c33e2972a445f3e8ecf5859b339577fcbe9e2b65/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f58636f64652d392532422d627269676874677265656e2e737667)
 [![Swift compatible](https://img.shields.io/badge/swift-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift/)
+[![CocoaPods compatible](https://img.shields.io/cocoapods/v/LCSlideMenu.svg)](#cocoapods) 
 ![](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
 ![](https://img.shields.io/badge/platform-iOS-blue.svg)
 ![https://github.com/ChinaHackers/LCSlideMenu/blob/master/LICENSE](https://img.shields.io/github/license/ChinaHackers/LCSlideMenu.svg)
@@ -12,13 +13,14 @@
 
 
 ## What is LCSlideMenu?
+
 <p align="center"> <b> LCSlideMenu It's a powerful and easy to use slider menu. </b></p> 
+
+
 ## Screencast from our Demo
 
 ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif)
-
 ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif)
-
 ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif)
 
 ## Requirements
@@ -47,15 +49,12 @@ pod 'LCSlideMenu'
 Swift 4.0.3：
 
 ```swift
-source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.2'
-use_frameworks!
-
 target '<Your Target Name>' do
-		pod 'LCSlideMenu', '~> 0.1.0'
+use_frameworks!
+pod 'LCSlideMenu'
 end
 ```
-
 
 
 Then, run the following command:
@@ -64,3 +63,36 @@ Then, run the following command:
 $ pod install
 ```
 ## Example:
+
+
+```swift
+import UIKit
+import LCSlideMenu
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        example()
+    }
+    fileprivate func example() {
+        
+       let titles = ["头条", "精选", "轻松一刻", "娱乐", "新时代", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
+        var controllers: [UIViewController] = []
+        
+        for _ in 0 ..< titles.count {
+            let vc = UIViewController()
+            vc.view.backgroundColor = UIColor(red: CGFloat(arc4random() % 256) / 255, green: CGFloat(arc4random() % 256) / 255, blue: CGFloat(arc4random() % 256) / 255, alpha: 1)
+
+            addChildViewController(vc)
+            controllers.append(vc)
+        }
+        /* -- LCSlideMenu -- */
+        let slideMenu = LCSlideMenu(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: 40), titles: titles, childControllers: controllers)
+        slideMenu.indicatorType = .stretch
+        slideMenu.titleStyle = .gradient
+        view.addSubview(slideMenu)
+    }
+}
+```

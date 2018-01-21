@@ -14,7 +14,7 @@ import UIKit
 /// - normal: 默认
 /// - gradient: 渐变颜色
 /// - transfrom: 放大
-enum LCSlideMenuTitleStyle {
+public enum LCSlideMenuTitleStyle {
     case normal
     case gradient
     case transfrom
@@ -25,22 +25,22 @@ enum LCSlideMenuTitleStyle {
 /// - normal: 默认
 /// - stretch: 伸缩
 /// - followText: 跟随文本长度
-enum LCSlideMenuIndicatorStyle {
+public enum LCSlideMenuIndicatorStyle {
     case normal
     case stretch
     case followText
 }
 
 // MARK: - 滑动菜单
-class LCSlideMenu: UIView {
+open class LCSlideMenu: UIView {
     
     //MARK: - 属性
     
     /// 指示器类型
-    var indicatorType: LCSlideMenuIndicatorStyle = .normal
+    public var indicatorType: LCSlideMenuIndicatorStyle = .normal
     
     /// 标题样式
-    var titleStyle: LCSlideMenuTitleStyle = .normal
+    public var titleStyle: LCSlideMenuTitleStyle = .normal
     
     /// 标题数组
     private var titles: [String]
@@ -138,7 +138,7 @@ class LCSlideMenu: UIView {
     ///   - frame: 尺寸
     ///   - titles: 标题数组
     ///   - childControllers: 控制器数组
-    init(frame: CGRect,titles: [String],childControllers: [UIViewController]) {
+    public init(frame: CGRect,titles: [String],childControllers: [UIViewController]) {
         
         self.titles = titles
         controllers = childControllers
@@ -155,7 +155,7 @@ class LCSlideMenu: UIView {
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -170,7 +170,7 @@ class LCSlideMenu: UIView {
      5、旋转Screen会触发父UIView上的layoutSubviews事件
      6、改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件
      */
-    override func layoutSubviews() {
+     override open func layoutSubviews() {
         super.layoutSubviews()
         
         configMainScrollView()
@@ -516,7 +516,7 @@ class LCSlideMenu: UIView {
 extension LCSlideMenu: UIScrollViewDelegate {
     
     // MARK: 当scrollview处于滚动状态时, offset发生改变,就会调用此函数. 直到停止.
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         /// 滚动视图横向(x)移动数值
         let offsetX = scrollView.contentOffset.x
@@ -537,7 +537,7 @@ extension LCSlideMenu: UIScrollViewDelegate {
     }
     
     // MARK: 结束减速时触发（减速到停止）
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
         // 根据滚动视图的横向移动数值 和 宽度值 ,计算当前页码
         let currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
