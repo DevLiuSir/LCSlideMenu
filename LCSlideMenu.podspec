@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "LCSlideMenu"
   s.version      = "0.1.1"
-  s.summary      = "A short description of LCSlideMenu."
+  s.summary      = "A powerful and easy to use slider menu."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
