@@ -67,7 +67,7 @@ open class LCSlideMenu: UIView {
     fileprivate let indicatorAnimatePadding: CGFloat = 8.0
     
     /// 菜单栏
-    private lazy var tabScrollView: UIScrollView = {
+    fileprivate lazy var tabScrollView: UIScrollView = {
         let tabScrollView = UIScrollView(frame: self.bounds)
         tabScrollView.showsVerticalScrollIndicator = false
         tabScrollView.showsHorizontalScrollIndicator = false
@@ -79,7 +79,7 @@ open class LCSlideMenu: UIView {
     fileprivate lazy var mainScrollView: UIScrollView = UIScrollView()
     
     /// 指示器视图
-    private lazy var indicatorView: UIView = UIView()
+    public lazy var indicatorView: UIView = UIView()
     
     /// 底部长线
     private lazy var scrollLine: UIView = { [unowned self] in
@@ -98,35 +98,35 @@ open class LCSlideMenu: UIView {
     }()
     
     /// 标题字体
-    var itemFont: UIFont = UIFont.systemFont(ofSize: 13) {
+    public var itemFont: UIFont = UIFont.systemFont(ofSize: 13) {
         didSet {
         
         }
     }
     
     /// 选中颜色
-    var selectedColor: UIColor = .red {
+    public var selectedColor: UIColor = .red {
         didSet {
         
         }
     }
     
     /// 未选中颜色
-    var unSelectedColor: UIColor = .black {
+    public var unSelectedColor: UIColor = .black {
         didSet {
             
         }
     }
     
     /// 下标距离底部距离
-    var bottomPadding: CGFloat = 2.0 {
+    public var bottomPadding: CGFloat = 2.0 {
         didSet {
         
         }
     }
     
     /// 下标高度
-    var indicatorHeight: CGFloat = 2.0 {
+    public var indicatorHeight: CGFloat = 2.0 {
         didSet{
         
         }

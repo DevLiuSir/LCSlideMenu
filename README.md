@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     }
     fileprivate func example() {
         
-       let titles = ["头条", "精选", "轻松一刻", "娱乐", "新时代", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
+        let titles = ["头条", "精选", "轻松一刻", "娱乐", "新时代", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
         var controllers: [UIViewController] = []
         
         for _ in 0 ..< titles.count {
@@ -92,6 +92,9 @@ class ViewController: UIViewController {
         let slideMenu = LCSlideMenu(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: 40), titles: titles, childControllers: controllers)
         slideMenu.indicatorType = .stretch
         slideMenu.titleStyle = .gradient
+        slideMenu.selectedColor = .red
+        slideMenu.unSelectedColor = .black
+        slideMenu.indicatorView.backgroundColor = .red
         view.addSubview(slideMenu)
     }
 }
