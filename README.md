@@ -1,14 +1,14 @@
 ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/LCSlideMenu.png)
 
-![](https://camo.githubusercontent.com/f3bc68f8badf9ec1143275e35cba2114910b0522/687474703a2f2f696d672e736869656c64732e696f2f62616467652f6c616e67756167652d73776966742d627269676874677265656e2e7376673f7374796c653d666c6174)
-[![Swift &4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg?style=flat)](https://developer.apple.com/swift/)
-![](https://camo.githubusercontent.com/c33e2972a445f3e8ecf5859b339577fcbe9e2b65/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f58636f64652d392532422d627269676874677265656e2e737667)
-[![Swift compatible](https://img.shields.io/badge/swift-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift/)
+![language](https://img.shields.io/badge/language-swift-orange.svg)
+[![Swift  4.0](https://img.shields.io/badge/swift-4.0+-blue.svg?style=flat)](https://developer.apple.com/swift/)
+![xcode version](https://img.shields.io/badge/xcode-9+-brightgreen.svg)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/LCSlideMenu.svg)](#cocoapods) 
-![](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
-![](https://img.shields.io/badge/platform-iOS-blue.svg)
+![download](https://img.shields.io/cocoapods/dt/LCSlideMenu.svg)
+![build](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
+![platform](https://img.shields.io/cocoapods/p/LCSlideMenu.svg?style=flat)
 ![https://github.com/ChinaHackers/LCSlideMenu/blob/master/LICENSE](https://img.shields.io/github/license/ChinaHackers/LCSlideMenu.svg)
-![](https://img.shields.io/github/stars/ChinaHackers/LCSlideMenu.svg?style=social&label=Star)
+![GitHub stars](https://img.shields.io/github/stars/ChinaHackers/LCSlideMenu.svg?style=social&label=Stars)
 [![Twitter Follow](https://img.shields.io/twitter/follow/LiuChuan_.svg?style=social)](https://twitter.com/LiuChuan_)
 
 
