@@ -8,7 +8,8 @@
 ![build](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
 ![platform](https://img.shields.io/cocoapods/p/LCSlideMenu.svg?style=flat)
 ![https://github.com/ChinaHackers/LCSlideMenu/blob/master/LICENSE](https://img.shields.io/github/license/ChinaHackers/LCSlideMenu.svg)
-![GitHub stars](https://img.shields.io/github/stars/ChinaHackers/LCSlideMenu.svg?style=social&label=Stars)
+![GitHub starts](https://img.shields.io/github/stars/ChinaHackers/LCSlideMenu.svg?style=social&label=Stars)
+![GitHub fork](https://img.shields.io/github/forks/ChinaHackers/LCSlideMenu.svg?style=social&label=Fork)
 [![Twitter Follow](https://img.shields.io/twitter/follow/LiuChuan_.svg?style=social)](https://twitter.com/LiuChuan_)
 
 
@@ -19,12 +20,12 @@
 
 ## Screencast from our Demo
 
-![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif)
-![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif)
-![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif)
+| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) |
+| :------------: | :------------: | :------------: |
+| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .normal` `titleStyle = .transfrom` |  `indicatorType = .stretch` `titleStyle = .transfrom` |
 
 ## Requirements
----
+
 - iOS 11.2
 - Xcode 9.2
 - Swift 4.0.3+
