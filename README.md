@@ -5,7 +5,7 @@
 ![xcode version](https://img.shields.io/badge/xcode-9+-brightgreen.svg)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/LCSlideMenu.svg)](#cocoapods) 
 ![download](https://img.shields.io/cocoapods/dt/LCSlideMenu.svg)
-![build](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)
+![build ](https://img.shields.io/appveyor/ci/gruntjs/grunt/master.svg)
 ![platform](https://img.shields.io/cocoapods/p/LCSlideMenu.svg?style=flat)
 ![https://github.com/ChinaHackers/LCSlideMenu/blob/master/LICENSE](https://img.shields.io/github/license/ChinaHackers/LCSlideMenu.svg)
 ![GitHub starts](https://img.shields.io/github/stars/ChinaHackers/LCSlideMenu.svg?style=social&label=Stars)
