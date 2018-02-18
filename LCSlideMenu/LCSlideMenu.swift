@@ -14,10 +14,12 @@ import UIKit
 /// - normal: 默认
 /// - gradient: 渐变颜色
 /// - transfrom: 放大
+/// - cover: 遮罩
 public enum LCSlideMenuTitleStyle {
     case normal
     case gradient
     case transfrom
+    case cover
 }
 
 /// 选择菜单指示器风格
@@ -54,6 +56,12 @@ open class LCSlideMenu: UIView {
     /// Item的间距
     private var itemMargin: CGFloat = 15.0
     
+    /// 遮罩高度
+    private var coverHeight : CGFloat = 25.0
+
+    /// 遮罩内部间距
+    private var coverInsetMargin : CGFloat = 10.0
+    
     /// 选中的索引
     fileprivate var itemSelectedIndex: Int = 0
     
@@ -66,6 +74,14 @@ open class LCSlideMenu: UIView {
     /// 伸缩动画的偏移量
     fileprivate let indicatorAnimatePadding: CGFloat = 8.0
     
+    // MARK: - 懒加载视图
+    
+    /// 指示器视图
+    public lazy var indicatorView: UIView = UIView()
+    
+    /// 内容视图
+    fileprivate lazy var mainScrollView: UIScrollView = UIScrollView()
+    
     /// 菜单栏
     fileprivate lazy var tabScrollView: UIScrollView = {
         let tabScrollView = UIScrollView(frame: self.bounds)
@@ -75,16 +91,10 @@ open class LCSlideMenu: UIView {
         return tabScrollView
     }()
     
-    /// 内容视图
-    fileprivate lazy var mainScrollView: UIScrollView = UIScrollView()
-    
-    /// 指示器视图
-    public lazy var indicatorView: UIView = UIView()
-    
     /// 底部长线
     private lazy var scrollLine: UIView = { [unowned self] in
         let scrollLine = UIView()
-        let scrollLineH: CGFloat = 0.5     // 底部长线的高度
+        let scrollLineH: CGFloat = 0.5
         scrollLine.backgroundColor = UIColor.lightGray
         scrollLine.frame = CGRect(x: 0, y: self.bounds.height - scrollLineH, width: self.bounds.width, height: scrollLineH)
         return scrollLine
@@ -96,11 +106,45 @@ open class LCSlideMenu: UIView {
         blurView.frame = self.bounds
         return blurView
     }()
+
+    /// 遮罩视图
+    private lazy var coverView : UIView = {
+        let coverView = UIView()
+        coverView.backgroundColor = coverColor
+        return coverView
+    }()
     
     /// 标题字体
     public var itemFont: UIFont = UIFont.systemFont(ofSize: 13) {
         didSet {
         
+        }
+    }
+    
+    /// 是否显示指示器视图
+    public var isShowIndicatorView: Bool = false {
+        didSet{     // 监听数值isShowIndicatorView的改变
+            if !isShowIndicatorView {
+                indicatorView.isHidden = true
+            }
+            configIndicatorView()
+        }
+    }
+    
+    /// 是否需要遮罩
+    public var isNeedMask: Bool = false {
+        didSet {    // 监听数值isNeedMask的改变
+            if !isNeedMask {
+                coverView.isHidden = true
+            }
+            configCoverView()
+        }
+    }
+    
+    /// 遮罩颜色
+    public var coverColor: UIColor = UIColor(white: 0.4, alpha: 0.5) {
+        didSet {
+            
         }
     }
     
@@ -118,14 +162,14 @@ open class LCSlideMenu: UIView {
         }
     }
     
-    /// 下标距离底部距离
+    /// 指示器距离底部距离
     public var bottomPadding: CGFloat = 2.0 {
         didSet {
         
         }
     }
     
-    /// 下标高度
+    /// 指示器高度
     public var indicatorHeight: CGFloat = 2.0 {
         didSet{
         
@@ -151,7 +195,7 @@ open class LCSlideMenu: UIView {
         addSubview(scrollLine)
         
         configTabScrollView()
-        configIndicatorView()
+//        configIndicatorView()
     }
     
     
@@ -213,19 +257,23 @@ open class LCSlideMenu: UIView {
         // 遍历titles
         for (index,title) in titles.enumerated() {
             
-            // 创建Label, 并设置其相关属性
+            // 1.创建Label, 并设置其相关属性
             let label = UILabel()
             label.text = title
             label.font = itemFont
+            label.isUserInteractionEnabled = true
+            label.textAlignment = .center
+            
             // 如果标签索引为:选中索引, 设置Label颜色为: 选中颜色, 否则为: 未选中颜色
             label.textColor = index == itemSelectedIndex ? selectedColor : unSelectedColor
-            label.isUserInteractionEnabled = true
             
             // 计算title长度
             // 根据文字来计算宽度
             let size = (title as NSString).size(withAttributes: [NSAttributedStringKey.font : itemFont])
-           
-            label.frame = CGRect(x: originX, y: 0, width: size.width, height: self.bounds.height)
+            
+            // 2.计算位置
+            label.frame = CGRect(x: originX, y: 0, width: size.width + itemMargin, height: self.bounds.height)
+       
             // 添加tap手势
             let tap = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
             label.addGestureRecognizer(tap)
@@ -235,12 +283,11 @@ open class LCSlideMenu: UIView {
             
             originX = label.frame.maxX + itemMargin * 2
         }
-        // 设置scrollView的滚动范围
+        // 3.设置scrollView的滚动范围
         tabScrollView.contentSize = CGSize(width: originX - itemMargin, height: self.bounds.height)
-        
         tabScrollView.addSubview(indicatorView)
         
-        //如果item的长度小于self的width，就重新计算margin排版
+        //如果item的长度小于当前视图的width，就重新计算margin排版
         if tabScrollView.contentSize.width < self.bounds.width {
            updateLabelsFrame()
         }
@@ -261,6 +308,23 @@ open class LCSlideMenu: UIView {
         indicatorView.layer.masksToBounds = true
     }
     
+    /// 配置遮罩视图
+    private func configCoverView() {
+        
+        tabScrollView.insertSubview(coverView, at: 0)
+        
+        guard let titleLabel = itemsLabel.first else { return }
+        let coverX : CGFloat = titleLabel.frame.origin.x
+        let coverW : CGFloat = titleLabel.frame.width
+        let coverH : CGFloat = coverHeight
+        let coverY : CGFloat = (titleLabel.frame.height - coverH) * 0.5 // 遮罩视图Y值
+        
+        coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
+        coverView.layer.cornerRadius = coverHeight * 0.4                // 设置圆角
+        coverView.layer.masksToBounds = true
+    }
+    
+    
     /// 监听item点击事件
     ///
     /// - Parameter gesture: 手势
@@ -280,6 +344,8 @@ open class LCSlideMenu: UIView {
         changeItemTitle(currentIndex, old: itemSelectedIndex)
         
         changeIndicatorViewPosition(currentIndex, old: itemSelectedIndex)
+        
+        changeCoverViewPosition(currentIndex, old: itemSelectedIndex)
         
         resetTabScrollViewContentOffset(currentLabel)
         
@@ -322,6 +388,28 @@ open class LCSlideMenu: UIView {
             self.indicatorView.frame = indicatorFrame
         }
     }
+    
+    
+    
+    /// 改变coverView的位置
+    ///
+    /// - Parameters:
+    ///   - current: 当前标题索引
+    ///   - old: 之前标题索引
+    private func changeCoverViewPosition(_ current: Int, old: Int) {
+        
+        // 获取之前label的尺寸
+        let frame = itemsLabel[old].frame
+        
+        /// 遮罩视图的Frame
+         let coverFrame = CGRect(x: frame.origin.x, y: coverView.frame.origin.y, width: frame.size.width, height: coverHeight)
+       
+        // 动画改变 coverView 的位置
+        UIView.animate(withDuration: 0.25) {
+            self.coverView.frame = coverFrame
+        }
+        
+    }
    
     /// 当item过少时，更新itemLabel位置
     private func updateLabelsFrame() {
@@ -353,7 +441,10 @@ open class LCSlideMenu: UIView {
         case .normal:   // 默认
             leftItem.textColor = progress <= 0.5 ? selectedColor : unSelectedColor
             rightItem.textColor = progress <= 0.5 ? unSelectedColor : selectedColor
-        default:
+        case .cover:    // 遮罩
+            leftItem.textColor = averageColor(currentColor: selectedColor, oldColor: unSelectedColor, percent: progress)
+            rightItem.textColor = averageColor(currentColor: unSelectedColor, oldColor: selectedColor, percent: progress)
+        default:       // .transfrom:放大
             if progress <= 0.5 {    // 如果进度 < 0.5
                 leftItem.textColor = selectedColor
                 rightItem.textColor = unSelectedColor
@@ -361,7 +452,7 @@ open class LCSlideMenu: UIView {
                     leftItem.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                     rightItem.transform = CGAffineTransform.identity
                 })
-            } else {
+            }else {
                 leftItem.textColor = unSelectedColor
                 rightItem.textColor = selectedColor
                 UIView.animate(withDuration: 0.25, animations: {
@@ -437,7 +528,7 @@ open class LCSlideMenu: UIView {
         
         let leftItem = itemsLabel[leftIndex]
         let rightItem = itemsLabel[rightIndex]
-        
+        /// 总得移动距离
         let totalSpace = rightItem.center.x - leftItem.center.x
         indicatorView.center = CGPoint(x:leftItem.center.x + totalSpace * ratio, y: indicatorView.center.y)
     }
@@ -463,21 +554,80 @@ open class LCSlideMenu: UIView {
         
         let leftItem = itemsLabel[leftIndex]
         let rightItem = itemsLabel[rightIndex]
+        
+        var frame = self.indicatorView.frame
+        let leftItemWidth: CGFloat = leftItem.frame.width
+        let leftItemFrameMinX: CGFloat = leftItem.frame.minX
+        let rightItemWidth: CGFloat = rightItem.frame.width
+        let rightItemFrameMaxX: CGFloat = rightItem.frame.maxX
+        
         /// 间距
         let distance: CGFloat = indicatorType == .stretch ? 0 : indicatorAnimatePadding
-        var frame = self.indicatorView.frame
-        let maxWidth = rightItem.frame.maxX - leftItem.frame.minX - distance * 2
+        
+        /// 最大宽度: 右边Item最大X值 - 左边Item最小X值 - 2倍间距
+        let maxWidth = rightItemFrameMaxX - leftItemFrameMinX - distance * 2
+        
         if ratio <= 0.5 {
-            frame.size.width = leftItem.frame.width + (maxWidth - leftItem.frame.width) * (ratio / 0.5)
-            frame.origin.x = leftItem.frame.minX + distance * (ratio / 0.5)
+            frame.size.width = leftItemWidth + (maxWidth - leftItemWidth) * (ratio / 0.5)
+            frame.origin.x = leftItemFrameMinX + distance * (ratio / 0.5)
         } else {
-            frame.size.width = rightItem.frame.width + (maxWidth - rightItem.frame.width) * ((1 - ratio) / 0.5)
-            frame.origin.x = rightItem.frame.maxX - frame.size.width - distance * ((1 - ratio) / 0.5)
+            frame.size.width = rightItemWidth + (maxWidth - rightItemWidth) * ((1 - ratio) / 0.5)
+            frame.origin.x = rightItemFrameMaxX - frame.size.width - distance * ((1 - ratio) / 0.5)
         }
         
         self.indicatorView.frame = frame
     }
 
+    
+    /// 处理cover状态
+    ///
+    /// - Parameter offsetX: 偏移量
+    fileprivate func handleCoverType(_ offsetX: CGFloat) {
+        
+        if offsetX <= 0 {
+            //左边界
+            leftIndex = 0
+            rightIndex = 0
+        } else if offsetX >= mainScrollView.contentSize.width {
+            //右边界
+            leftIndex = itemsLabel.count - 1
+            rightIndex = leftIndex
+        } else {
+            //中间
+            leftIndex = Int(offsetX / mainScrollView.bounds.width)
+            rightIndex = leftIndex + 1
+        }
+        /// 比例
+        let ratio = offsetX / mainScrollView.bounds.width - CGFloat(leftIndex)
+        if ratio == 0 { return }
+        
+        let leftItem = itemsLabel[leftIndex]
+        let rightItem = itemsLabel[rightIndex]
+
+        var frame = self.coverView.frame
+        let leftItemWidth: CGFloat = leftItem.frame.width
+        let leftItemFrameMinX: CGFloat = leftItem.frame.minX
+        let rightItemWidth: CGFloat = rightItem.frame.width
+        let rightItemFrameMaxX: CGFloat = rightItem.frame.maxX
+       
+        /// 间距
+        let distance: CGFloat = titleStyle == .cover ? 0 : 8
+       
+        /// 最大宽度: 右边Item最大X值 - 左边Item最小X值 - 2倍间距
+        let maxWidth = rightItem.frame.maxX - leftItem.frame.minX - distance * 2
+
+        if ratio <= 0.5 {
+            frame.size.width = leftItemWidth + (maxWidth - leftItemWidth) * (ratio / 0.5)
+            frame.origin.x = leftItemFrameMinX + distance * (ratio / 0.5)
+        } else {
+            frame.size.width = rightItemWidth + (maxWidth - rightItemWidth) * ((1 - ratio) / 0.5)
+            frame.origin.x = rightItemFrameMaxX - frame.size.width - distance * ((1 - ratio) / 0.5)
+        }
+        self.coverView.frame = frame
+        
+    }
+    
+    
     /// 渐变颜色
     ///
     /// - Parameters:
@@ -517,7 +667,7 @@ extension LCSlideMenu: UIScrollViewDelegate {
     
     // MARK: 当scrollview处于滚动状态时, offset发生改变,就会调用此函数. 直到停止.
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+      
         /// 滚动视图横向(x)移动数值
         let offsetX = scrollView.contentOffset.x
         switch indicatorType {
@@ -529,6 +679,10 @@ extension LCSlideMenu: UIScrollViewDelegate {
             handleFollowTextIndicatorType(offsetX)
         }
         
+        if titleStyle == .cover {
+            handleCoverType(offsetX)
+        }
+ 
         //计算偏移的相对位移
         let relativeLacation = mainScrollView.contentOffset.x / mainScrollView.frame.width - CGFloat(leftIndex)
         if relativeLacation == 0 { return }
