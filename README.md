@@ -20,9 +20,9 @@
 
 ## Screencast from our Demo
 
-| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) |
-| :------------: | :------------: | :------------: |
-| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .normal` `titleStyle = .transfrom` |  `indicatorType = .stretch` `titleStyle = .transfrom` |
+| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast04.gif) |
+| :------------: | :------------: | :------------: | :------------: |
+| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .normal` `titleStyle = .cover` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
 
 ## Requirements
 
@@ -79,7 +79,8 @@ class ViewController: UIViewController {
     }
     fileprivate func example() {
         
-        let titles = ["头条", "精选", "轻松一刻", "娱乐", "新时代", "手机","体育", "视频", "财经", "汽车","军事", "房产", "健康", "彩票", "搞笑"]
+        let titles = ["Apple", "Banana", "Watermelon", "Orange", "Lemon", "Pear","Strawberry", "Sapodilla", "Haw", "Grape","Mango", "Plum", "Persimmon", "Fig", "Betelnut"]
+
         var controllers: [UIViewController] = []
         
         for _ in 0 ..< titles.count {
@@ -89,10 +90,12 @@ class ViewController: UIViewController {
             addChildViewController(vc)
             controllers.append(vc)
         }
-        /* -- LCSlideMenu -- */
+      	/* -- LCSlideMenu -- */
         let slideMenu = LCSlideMenu(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: 40), titles: titles, childControllers: controllers)
         slideMenu.indicatorType = .stretch
         slideMenu.titleStyle = .gradient
+        slideMenu.isShowIndicatorView = true
+        slideMenu.isNeedMask = false
         slideMenu.selectedColor = .red
         slideMenu.unSelectedColor = .black
         slideMenu.indicatorView.backgroundColor = .red
