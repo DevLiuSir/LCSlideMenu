@@ -14,16 +14,16 @@
 
 ---
 
-## What is LCSlideMenu?
+##  LCSlideMenu 是什么?
 
-<p align="center"> <b> LCSlideMenu It's a powerful and easy to use slider menu. </b></p> 
-
-
-> [中文](https://github.com/ChinaHackers/LCSlideMenu/blob/master/README_CN.md) | [English](https://github.com/ChinaHackers/LCSlideMenu/blob/master/README.md)
+<p align="center"> <b>  LCSlideMenu 是一个功能强大且易于使用的滑块菜单。</b></p> 
 
 
+> [ English ](https://github.com/ChinaHackers/LCSlideMenu/blob/master/README.md)
 
-## Screencast from our Demo
+
+
+### 演示屏幕录像
 
 | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast04.gif) |
 | :------------: | :------------: | :------------: | :------------: |
@@ -34,29 +34,32 @@
 | `indicatorType = .cover` `titleStyle = .gradient` | `isShowIndicatorView = false`  `titleStyle = .transfrom` | `indicatorType = .cover` `titleStyle = .transfrom` | `isShowIndicatorView = false`  `titleStyle = .gradient` |
 
 ---
-## Menu indicator and title style
+###  菜单指示器和标题样式
 
-- **Using enumerations to define `LCSlideMenuTitleStyle` and `LCSlideMenuTitleStyle` types**
+- **使用枚举定义 `LCSlideMenuTitleStyle`和 `LCSlideMenuTitleStyle` 类型**
+
+
 
 ```swift
 
-/// Select the menu header style
+
+/// 选择菜单标题样式
 ///
-/// - normal: normal
-/// - gradient: The gradient color
-/// - transfrom: zoom
+/// - normal: 默认
+/// - gradient: 渐变颜色
+/// - transfrom: 放大
 public enum LCSlideMenuTitleStyle {
     case normal
     case gradient
     case transfrom
 }
 
-/// Select the menu indicator style
+/// 选择菜单指示器风格
 ///
-/// - normal: normal
-/// - stretch: stretch
-/// - followText: Following text length
-/// - cover: mask
+/// - normal: 默认
+/// - stretch: 伸缩
+/// - followText: 跟随文本长度
+/// - cover: 遮罩
 public enum LCSlideMenuIndicatorStyle {
     case normal
     case stretch
@@ -66,46 +69,45 @@ public enum LCSlideMenuIndicatorStyle {
 
 ```
 
+### 属性
 
-## Attribute
-
-|  Attribute name	|  Specific introduction of attributes	|
+|  属性名称	|  特定的属性介绍	|
 | :------------: | :------------: | 
-| `coverView` 		|  Mask the view |
-|  `indicatorType `  	|  LCSlideMenu  of  indicator type  |
-|  `titleStyle`			|  Heading styles  |
-| `itemFont`			|  The font size of the heading  |
-|  `isShowIndicatorView` |  Whether to display the indicator view  |
-|  `isNeedMask`  		|  Do you need a mask?  |
-| `coverHeight`		| The height of the mask view  |
-|  `coverColor` 		|  The background color of the mask view  |
-|  `selectedColor` 		| The color in the currently selected state   |
-|  `unSelectedColor` 	| The color of the unchecked state  |
-| `bottomPadding`		| The indicator is at the bottom  |
-| `indicatorHeight`		| Height of indicator |
+| `coverView` 		|  遮罩视图 |
+|  `indicatorType `  	|  指示器类型  |
+|  `titleStyle`			|  标题样式  |
+| `itemFont`			|  字体大小  |
+|  `isShowIndicatorView` |  是否显示指示器视图  |
+|  `isNeedMask`  		|  是否需要遮罩  |
+| `coverHeight`		| 遮罩视图的高度  |
+|  `coverColor` 		|  遮罩视图的背景色  |
+|  `selectedColor` 		| 选中状态下的颜色   |
+|  `unSelectedColor` 	| 未选中状态下的颜色 |
+| `bottomPadding`		| 指示器距离底部距离 |
+| `indicatorHeight`		| 指示器的高度 |
 
 
 ---
 
-## Requirements
+
+### 需求
 
 - iOS 11.2
 - Xcode 9.2
 - Swift 4.0.3+
 
-## Installation
+### 安装
 
-[CocoaPods](http://cocoapods.org/) is a dependency manager for Cocoa projects. You can install it with the following command:
+[CocoaPods](http://cocoapods.org/) 是Cocoa项目的依赖项管理器。您可以使用以下命令安装它:
 
 
 ```swift
 $ gem install cocoapods
 ```
 
+- 只需将 `LCSlideMenu` 文件夹添加到项目中
 
-- Just add the `LCSlideMenu` folder to your project.
-
-- or add them to your ` Podfile ` file to  use `CocoaPods`  install  **LCSlideMenu**
+- 或者将其添加到您的 `Podfile` 文件中来安装 **LCSlideMenu**
 
 
 ```swift
@@ -117,13 +119,15 @@ end
 ```
 
 
-Then, run the following command:
+然后，运行以下命令:
+
 
 ```swift
 $ pod install
 ```
 
-## Example:
+
+### 用法举例:
 
 
 ```swift
