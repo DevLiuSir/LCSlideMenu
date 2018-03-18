@@ -25,11 +25,11 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-                A powerful and easy to use slider menu.
+                A LCSlide Menu Library Can quickly create a controller with a sliding menu bar.
                    DESC
 
   s.homepage     = "https://github.com/ChinaHackers/LCSlideMenu"
-  s.screenshots  = "https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif", "https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif"
+  s.screenshots  = "https://ws4.sinaimg.cn/large/006tNc79gy1fpjn73intog30be0mib2d.gif", "https://ws3.sinaimg.cn/large/006tNc79gy1fpjncsqqs4g30be0mikjn.gif"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
