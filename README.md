@@ -12,6 +12,7 @@
 ![GitHub fork](https://img.shields.io/github/forks/ChinaHackers/LCSlideMenu.svg?style=social&label=Fork)
 [![Twitter Follow](https://img.shields.io/twitter/follow/LiuChuan_.svg?style=social)](https://twitter.com/LiuChuan_)
 
+---
 
 ## What is LCSlideMenu?
 
@@ -22,7 +23,34 @@
 
 | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast04.gif) |
 | :------------: | :------------: | :------------: | :------------: |
-| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .normal` `titleStyle = .cover` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
+| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .cover` `titleStyle = .gradient` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
+
+| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast05.gif)  | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast06.gif)  |  ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast08.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast07.gif) |
+| :------------: | :------------: | :------------: | :------------: |
+| `indicatorType = .cover` `titleStyle = .gradient` | `isShowIndicatorView = false`  `titleStyle = .transfrom` | `indicatorType = .cover` `titleStyle = .transfrom` | `isShowIndicatorView = false`  `titleStyle = .gradient` |
+
+---
+
+
+## Attribute
+
+|  Attribute name	|  Specific introduction of attributes	|
+| :------------: | :------------: | 
+| `coverView` 		|  Mask the view |
+|  `indicatorType `  	|  LCSlideMenu  of  indicator type  |
+|  `titleStyle`			|  Heading styles  |
+| `itemFont`			|  The font size of the heading  |
+|  `isShowIndicatorView` |  Whether to display the indicator view  |
+|  `isNeedMask`  		|  Do you need a mask?  |
+| `coverHeight`		| The height of the mask view  |
+|  `coverColor` 		|  The background color of the mask view  |
+|  `selectedColor` 		| The color in the currently selected state   |
+|  `unSelectedColor` 	| The color of the unchecked state  |
+| `bottomPadding`		| The indicator is at the bottom  |
+| `indicatorHeight`		| Height of indicator |
+
+
+---
 
 ## Requirements
 
@@ -80,23 +108,23 @@ class ViewController: UIViewController {
     fileprivate func example() {
         
         let titles = ["Apple", "Banana", "Watermelon", "Orange", "Lemon", "Pear","Strawberry", "Sapodilla", "Haw", "Grape","Mango", "Plum", "Persimmon", "Fig", "Betelnut"]
-
         var controllers: [UIViewController] = []
         
         for _ in 0 ..< titles.count {
             let vc = UIViewController()
             vc.view.backgroundColor = UIColor(red: CGFloat(arc4random() % 256) / 255, green: CGFloat(arc4random() % 256) / 255, blue: CGFloat(arc4random() % 256) / 255, alpha: 1)
-
             addChildViewController(vc)
             controllers.append(vc)
         }
       	/* -- LCSlideMenu -- */
         let slideMenu = LCSlideMenu(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: 40), titles: titles, childControllers: controllers)
-        slideMenu.indicatorType = .stretch
+        slideMenu.indicatorType = .cover
         slideMenu.titleStyle = .gradient
-        slideMenu.isShowIndicatorView = true
-        slideMenu.isNeedMask = false
-        slideMenu.selectedColor = .red
+        slideMenu.isShowIndicatorView = false
+        slideMenu.isNeedMask = true
+        slideMenu.coverView.layer.cornerRadius = slideMenu.coverHeight * 0.2
+        slideMenu.coverColor = .black
+        slideMenu.selectedColor = .white
         slideMenu.unSelectedColor = .black
         slideMenu.indicatorView.backgroundColor = .red
         view.addSubview(slideMenu)
