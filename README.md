@@ -30,6 +30,37 @@
 | `indicatorType = .cover` `titleStyle = .gradient` | `isShowIndicatorView = false`  `titleStyle = .transfrom` | `indicatorType = .cover` `titleStyle = .transfrom` | `isShowIndicatorView = false`  `titleStyle = .gradient` |
 
 ---
+## Menu indicator and title style
+
+- **Using enumerations to define `LCSlideMenuTitleStyle` and `LCSlideMenuTitleStyle` types**
+
+```swift
+
+/// Select the menu header style
+///
+/// - normal: normal
+/// - gradient: The gradient color
+/// - transfrom: zoom
+public enum LCSlideMenuTitleStyle {
+    case normal
+    case gradient
+    case transfrom
+}
+
+/// Select the menu indicator style
+///
+/// - normal: normal
+/// - stretch: stretch
+/// - followText: Following text length
+/// - cover: mask
+public enum LCSlideMenuIndicatorStyle {
+    case normal
+    case stretch
+    case followText
+    case cover
+}
+
+```
 
 
 ## Attribute
