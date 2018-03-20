@@ -34,11 +34,13 @@ class ViewController: UIViewController {
         
         /* -- LCSlideMenu -- */
         let slideMenu = LCSlideMenu(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: 40), titles: titles, childControllers: controllers)
-        slideMenu.indicatorType = .stretch
+        slideMenu.indicatorType = .cover
         slideMenu.titleStyle = .gradient
-        slideMenu.isShowIndicatorView = true
-        slideMenu.isNeedMask = false
-        slideMenu.selectedColor = .red
+        slideMenu.isShowIndicatorView = false
+        slideMenu.isNeedMask = true
+        slideMenu.coverView.layer.cornerRadius = slideMenu.coverHeight * 0.2
+        slideMenu.coverColor = .black
+        slideMenu.selectedColor = .white
         slideMenu.unSelectedColor = .black
         slideMenu.indicatorView.backgroundColor = .red
         view.addSubview(slideMenu)
