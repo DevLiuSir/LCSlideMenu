@@ -36,7 +36,7 @@
 ---
 ###  菜单指示器和标题样式
 
-- **使用枚举定义 `LCSlideMenuTitleStyle`和 `LCSlideMenuTitleStyle` 类型**
+- **使用枚举定义 `LCSlideMenuTitleStyle`和 `LCSlideMenuIndicatorStyle` 类型**
 
 
 

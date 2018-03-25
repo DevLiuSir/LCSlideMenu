@@ -36,7 +36,7 @@
 ---
 ## Menu indicator and title style
 
-- **Using enumerations to define `LCSlideMenuTitleStyle` and `LCSlideMenuTitleStyle` types**
+- **Using enumerations to define `LCSlideMenuTitleStyle` and `LCSlideMenuIndicatorStyle` types**
 
 ```swift
 
