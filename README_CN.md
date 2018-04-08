@@ -27,7 +27,7 @@
 
 | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast04.gif) |
 | :------------: | :------------: | :------------: | :------------: |
-| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .cover` `titleStyle = .gradient` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
+| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .circle` `titleStyle = .gradient` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
 
 | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast05.gif)  | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast06.gif)  |  ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast08.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast07.gif) |
 | :------------: | :------------: | :------------: | :------------: |
@@ -60,21 +60,24 @@ public enum LCSlideMenuTitleStyle {
 /// - stretch: 伸缩
 /// - followText: 跟随文本长度
 /// - cover: 遮罩
+/// - circle: 圆圈
 public enum LCSlideMenuIndicatorStyle {
     case normal
     case stretch
     case followText
     case cover
+    case circle
 }
 
 ```
 
-### 属性
+### 公众的属性
 
 |  属性名称	|  特定的属性介绍	|
 | :------------: | :------------: | 
 | `coverView` 		|  遮罩视图 |
 |  `indicatorType `  	|  指示器类型  |
+| `circleIndicatorColor` |  圆圈指示器的颜色  |
 |  `titleStyle`			|  标题样式  |
 | `itemFont`			|  字体大小  |
 |  `isShowIndicatorView` |  是否显示指示器视图  |
@@ -159,6 +162,7 @@ class ViewController: UIViewController {
         slideMenu.isShowIndicatorView = false
         slideMenu.isNeedMask = true
         slideMenu.coverView.layer.cornerRadius = slideMenu.coverHeight * 0.2
+        slideMenu.circleIndicatorColor = UIColor.red.cgColor
         slideMenu.coverColor = .black
         slideMenu.selectedColor = .white
         slideMenu.unSelectedColor = .black

@@ -27,9 +27,9 @@
 
 | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast01.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast02.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast03.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast04.gif) |
 | :------------: | :------------: | :------------: | :------------: |
-| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .cover` `titleStyle = .gradient` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
+| `indicatorType = .stretch` `titleStyle = .gradient` |  `indicatorType = .circle` `titleStyle = .gradient` |  `indicatorType = .stretch` `titleStyle = .transfrom` |  `indicatorType = .normal` `titleStyle = .transfrom` |
 
-| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast05.gif)  | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast06.gif)  |  ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast08.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast07.gif) |
+| ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast05.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast06.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast08.gif) | ![](https://github.com/ChinaHackers/LCSlideMenu/raw/master/Screencast/Screencast07.gif) |
 | :------------: | :------------: | :------------: | :------------: |
 | `indicatorType = .cover` `titleStyle = .gradient` | `isShowIndicatorView = false`  `titleStyle = .transfrom` | `indicatorType = .cover` `titleStyle = .transfrom` | `isShowIndicatorView = false`  `titleStyle = .gradient` |
 
@@ -57,22 +57,25 @@ public enum LCSlideMenuTitleStyle {
 /// - stretch: stretch
 /// - followText: Following text length
 /// - cover: mask
+/// - circle: circle
 public enum LCSlideMenuIndicatorStyle {
     case normal
     case stretch
     case followText
     case cover
+    case circle
 }
 
 ```
 
 
-## Attribute
+## Public Attribute
 
 |  Attribute name	|  Specific introduction of attributes	|
 | :------------: | :------------: | 
 | `coverView` 		|  Mask the view |
 |  `indicatorType `  	|  LCSlideMenu  of  indicator type  |
+| `circleIndicatorColor` |  circle Style Indicator Color  |
 |  `titleStyle`			|  Heading styles  |
 | `itemFont`			|  The font size of the heading  |
 |  `isShowIndicatorView` |  Whether to display the indicator view  |
@@ -155,6 +158,7 @@ class ViewController: UIViewController {
         slideMenu.isShowIndicatorView = false
         slideMenu.isNeedMask = true
         slideMenu.coverView.layer.cornerRadius = slideMenu.coverHeight * 0.2
+        slideMenu.circleIndicatorColor = UIColor.red.cgColor
         slideMenu.coverColor = .black
         slideMenu.selectedColor = .white
         slideMenu.unSelectedColor = .black
