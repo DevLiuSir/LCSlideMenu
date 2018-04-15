@@ -26,11 +26,13 @@ public enum LCSlideMenuTitleStyle {
 /// - stretch: 伸缩
 /// - followText: 跟随文本长度
 /// - cover: 遮罩
+/// - circle: 圆圈
 public enum LCSlideMenuIndicatorStyle {
     case normal
     case stretch
     case followText
     case cover
+    case circle
 }
 
 /// 滑动菜单
@@ -50,8 +52,14 @@ open class LCSlideMenu: UIView {
     /// 定义一个数组, 记录UILabel
     fileprivate var itemsLabel: [UILabel] = []
     
+    /// 定义一个数组, 记录circleIndicator
+    fileprivate var itemsView: [UIView] = []
+    
     /// 控制器数组
     private var controllers: [UIViewController]
+    
+    /// 圆圈指示器的宽度
+    private var circleIndicatorWidth: CGFloat = 10
     
     /// Item的间距
     private var itemMargin: CGFloat = 15.0
@@ -67,7 +75,6 @@ open class LCSlideMenu: UIView {
     
     /// 伸缩动画的偏移量
     fileprivate let indicatorAnimatePadding: CGFloat = 8.0
-    
     
     /// 标题字体
     public var itemFont: UIFont = UIFont.systemFont(ofSize: 13) {
@@ -95,6 +102,17 @@ open class LCSlideMenu: UIView {
                 coverView.isHidden = true
             }
             configCoverView()
+        }
+    }
+    
+    /// 圆圈指示器的颜色
+    public var circleIndicatorColor: CGColor = UIColor.red.cgColor {
+        didSet {    // 监听数值 `circleIndicatorColor` 的改变, 从而修改 `circleIndicator` 的边框色
+            if circleIndicatorColor != oldValue {
+                for (index, _) in titles.enumerated() {     // 遍历titles
+                    itemsView[index].layer.borderColor = circleIndicatorColor
+                }
+            }
         }
     }
     
@@ -284,8 +302,22 @@ extension LCSlideMenu {
             let tap = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
             label.addGestureRecognizer(tap)
             
+            /*** 创建圆圈指示器,并设置其属性 ***/
+            /// 圆圈指示器
+            let circleIndicator = UIView()
+            circleIndicator.frame = CGRect(x: label.frame.maxX, y: label.frame.origin.y + 5, width: circleIndicatorWidth, height: circleIndicatorWidth)
+            circleIndicator.backgroundColor = .clear
+            circleIndicator.layer.borderWidth = 2
+            circleIndicator.layer.borderColor = circleIndicatorColor
+            circleIndicator.layer.cornerRadius = circleIndicatorWidth * 0.5
+            circleIndicator.layer.masksToBounds = true
+            // 如果索引为:选中索引, 设置不透明, 否则:透明
+            circleIndicator.alpha = index == itemSelectedIndex ? 1 : 0
+            
             tabScrollView.addSubview(label)
+            tabScrollView.addSubview(circleIndicator)
             itemsLabel.append(label)
+            itemsView.append(circleIndicator)
             
             originX = label.frame.maxX + itemMargin * 2
         }
@@ -354,6 +386,8 @@ extension LCSlideMenu {
         
         changeCoverViewPosition(currentIndex, old: itemSelectedIndex)
         
+        changeCircleIndicatorPosition(currentIndex, old: itemSelectedIndex)
+        
         resetTabScrollViewContentOffset(currentLabel)
         
         resetMainScrollViewContentOffset(itemSelectedIndex)
@@ -374,9 +408,7 @@ extension LCSlideMenu {
                 self.itemsLabel[current].transform = CGAffineTransform.identity
             })
         }
-        
     }
-    
     
     /// 改变indicatorView位置
     ///
@@ -396,8 +428,6 @@ extension LCSlideMenu {
         }
     }
     
-    
-    
     /// 改变coverView的位置
     ///
     /// - Parameters:
@@ -415,7 +445,27 @@ extension LCSlideMenu {
         UIView.animate(withDuration: 0.25) {
             self.coverView.frame = coverFrame
         }
+    }
+    
+    /// 改变CircleIndicator的位置
+    ///
+    /// - Parameters:
+    ///   - current: 当前标题索引
+    ///   - old: 之前标题索引
+    private func changeCircleIndicatorPosition(_ current: Int, old: Int) {
         
+        /// 获取当前的View
+        let currentV = itemsView[current]
+        /// 获取之前的View
+        let oldV = itemsView[old]
+        
+        // 动画改变`CircleIndicator`的显示
+        UIView.animate(withDuration: 0.25) {
+            currentV.alpha = 0
+            oldV.alpha = 1
+            currentV.transform = .identity
+            oldV.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
     }
     
     /// 当item过少时，更新itemLabel位置
@@ -631,6 +681,43 @@ extension LCSlideMenu {
         
     }
     
+    /// 处理circle状态
+    ///
+    /// - Parameter offsetX: 偏移量
+    fileprivate func handleCircleType(_ offsetX: CGFloat) {
+        
+        if offsetX <= 0 {   //左边界
+            leftIndex = 0
+            rightIndex = 0
+        } else if offsetX >= mainScrollView.contentSize.width { //右边界
+            leftIndex = itemsLabel.count - 1
+            rightIndex = leftIndex
+        } else {        //中间
+            leftIndex = Int(offsetX / mainScrollView.bounds.width)
+            rightIndex = leftIndex + 1
+        }
+        /// 左边视图
+        let leftItem = itemsView[leftIndex]
+        /// 右边视图
+        let rightItem = itemsView[rightIndex]
+        /// 进度
+        let progress = offsetX / mainScrollView.bounds.width - CGFloat(leftIndex)
+        if progress == 0 { return }
+        
+        if progress <= 0.5 {
+            UIView.animate(withDuration: 0.25, animations: {
+                leftItem.transform = CGAffineTransform(scaleX: CGFloat(1 - progress), y: CGFloat(1 - progress))
+                leftItem.alpha = 1
+                rightItem.alpha = 0
+            })
+        }else {
+            UIView.animate(withDuration: 0.25, animations: {
+                rightItem.transform = CGAffineTransform(scaleX: CGFloat(progress), y: CGFloat(progress))
+                leftItem.alpha = 0
+                rightItem.alpha = 1
+            })
+        }
+    }
     
     /// 渐变颜色
     ///
@@ -683,7 +770,9 @@ extension LCSlideMenu: UIScrollViewDelegate {
         case .followText:
             handleFollowTextIndicatorType(offsetX)
         case .cover:
-             handleCoverType(offsetX)
+            handleCoverType(offsetX)
+        case .circle:
+            handleCircleType(offsetX)
         }
         
         //计算偏移的相对位移
